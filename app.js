@@ -10,6 +10,8 @@ let flash = require("express-flash")
 let session = require("express-session")
 let helmet = require("helmet")
 
+let errorHandler = require("./middlewares/errorHandler")
+
 //? middlewares
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
@@ -28,5 +30,11 @@ app.set("view engine", "ejs")
 app.set("views", path.join(__dirname, "views"))
 
 app.use(express.static(path.join(__dirname,"public")))
+
+//? routes
+app.use((req,res)=>{
+    return res.status(404).render("404")
+})
+app.use(errorHandler)
 
 module.exports = app
