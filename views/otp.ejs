@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>تأیید کد - ورود با OTP</title>
+    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class="otp-card">
+        <h2>تأیید کد ورود</h2>
+        <p class="lead">کد ۶ رقمی ارسال شده را وارد کنید</p>
+
+        <form autocomplete="off">
+            <div class="otp-inputs">
+                <input type="text" maxlength="1" pattern="\d*" inputmode="numeric">
+                <input type="text" maxlength="1" pattern="\d*" inputmode="numeric">
+                <input type="text" maxlength="1" pattern="\d*" inputmode="numeric">
+                <input type="text" maxlength="1" pattern="\d*" inputmode="numeric">
+                <input type="text" maxlength="1" pattern="\d*" inputmode="numeric">
+                <input type="text" maxlength="1" pattern="\d*" inputmode="numeric">
+            </div>
+
+            <button class="btn-primary" type="submit">تأیید</button>
+
+            <div class="meta">
+                <a class="resend" href="#">بازگشت به صفحه ورود</a>
+                <a href="#" class="resend">ارسال مجدد</a>
+            </div>
+        </form>
+    </div>
+</body>
+
+</html>
