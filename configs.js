@@ -31,5 +31,6 @@ module.exports = {
             clientSecret:process.env.GOOGLE_CLIENT_SECRET
         }
     },
-    domain:process.env.DOMAIN
+    domain:process.env.DOMAIN,
+    session:process.env.SESSION_SECRET
 }
