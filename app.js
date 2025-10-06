@@ -9,8 +9,10 @@ let cors = require("cors")
 let flash = require("express-flash")
 let session = require("express-session")
 let helmet = require("helmet")
+let passport = require("passport")
 
 let errorHandler = require("./middlewares/errorHandler")
+let googleStrategy = require("./strategies/googleStrategy")
 
 let authRouter = require("./routers/auth")
 
@@ -31,12 +33,14 @@ app.use(helmet())
 app.set("view engine", "ejs")
 app.set("views", path.join(__dirname, "views"))
 
-app.use(express.static(path.join(__dirname,"public")))
+app.use(express.static(path.join(__dirname, "public")))
 
+//? strategies
+passport.use(googleStrategy)
 //? routes
 app.use("/auth", authRouter)
 
-app.use((req,res)=>{
+app.use((req, res) => {
     return res.status(404).render("404")
 })
 app.use(errorHandler)
