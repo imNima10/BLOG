@@ -2,7 +2,6 @@ const configs = require("../configs")
 let User = require("../models/user")
 
 let googleStrategy = require("passport-google-oauth20").Strategy
-console.log(`${configs.domain}/auth/google/callback`);
 
 module.exports = new googleStrategy({
     clientID: configs.auth.google.clientId,

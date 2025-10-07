@@ -6,7 +6,7 @@ let JWT = require("jsonwebtoken")
 exports.createAccessToken = async (user) => {
     try {
         let token = await JWT.sign({ id: user._id }, configs.auth.token.accessToken.secretKey, {
-            expiresIn: configs.auth.token.accessToken.expire + "s"
+            expiresIn: configs.auth.token.accessToken.expire + "m"
         })
         return token
     } catch (error) {
@@ -16,7 +16,7 @@ exports.createAccessToken = async (user) => {
 exports.createRefreshToken = async (user) => {
     try {
         let token = await JWT.sign({ id: user._id }, configs.auth.token.refreshToken.secretKey, {
-            expiresIn: configs.auth.token.refreshToken.expire + "s"
+            expiresIn: configs.auth.token.refreshToken.expire + "d"
         })
         return token
     } catch (error) {
