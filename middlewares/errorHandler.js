@@ -2,7 +2,7 @@ let { errorResponse } = require("./../helpers/responses")
 
 module.exports = async (err, req, res, next) => {
     if (err.name == "ValidationError") {
-        if (err.inner) {
+        if (err.inner.length) {
             let error = []
             err.inner.forEach(e => {
                 let theError = {
