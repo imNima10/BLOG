@@ -18,3 +18,14 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 });
+
+const form = document.querySelector('form');
+const inputs = document.querySelectorAll('.otp-inputs input');
+const otpField = document.getElementById('otp');
+
+form.addEventListener('submit', (e) => {
+  const otpArray = Array.from(inputs).map(i => i.value);
+  const isRTL = getComputedStyle(document.body).direction === 'rtl';
+  const otpValue = isRTL ? otpArray.reverse().join('') : otpArray.join('');
+  otpField.value = otpValue;
+});

@@ -14,14 +14,16 @@
         <h2>تأیید کد ورود</h2>
         <p class="lead">کد ۶ رقمی ارسال شده را وارد کنید</p>
 
-        <form autocomplete="off">
+        <form autocomplete="off" action="/auth/local/verify" method="post">
+            <input type="hidden" name="userKey" value="<%= userKey %>">
+            <input type="hidden" name="otp" id="otp">
             <div class="otp-inputs">
-                <input type="text" maxlength="1" pattern="\d*" inputmode="numeric">
-                <input type="text" maxlength="1" pattern="\d*" inputmode="numeric">
-                <input type="text" maxlength="1" pattern="\d*" inputmode="numeric">
-                <input type="text" maxlength="1" pattern="\d*" inputmode="numeric">
-                <input type="text" maxlength="1" pattern="\d*" inputmode="numeric">
-                <input type="text" maxlength="1" pattern="\d*" inputmode="numeric">
+                <input type="text" maxlength="1" pattern="\d*" inputmode="numeric" name="n6">
+                <input type="text" maxlength="1" pattern="\d*" inputmode="numeric" name="n5">
+                <input type="text" maxlength="1" pattern="\d*" inputmode="numeric" name="n4">
+                <input type="text" maxlength="1" pattern="\d*" inputmode="numeric" name="n3">
+                <input type="text" maxlength="1" pattern="\d*" inputmode="numeric" name="n2">
+                <input type="text" maxlength="1" pattern="\d*" inputmode="numeric" name="n1">
             </div>
 
             <button class="btn-primary" type="submit">تأیید</button>
