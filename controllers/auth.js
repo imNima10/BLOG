@@ -5,6 +5,7 @@ let redis = require("../db/redis")
 const configs = require("../configs")
 let bcrypt = require("bcrypt")
 const { generateUserKey, generateOtp, getOtpDetails, getUserKeyDetails, getOtpRedisPattern, getUserKeyRedisPattern } = require("../utils/auth")
+let otpSender = require("../services/otp")
 
 exports.getLogin = async (req, res, next) => {
     return res.render("login")
@@ -30,7 +31,7 @@ exports.login = async (req, res, next) => {
             sameSite: "strict",
             maxAge: configs.auth.token.accessToken.expire * 60 * 1000
         })
-        
+
         let refreshToken = await createRefreshToken(existingUser)
         await redis.del(`refresh-token:${existingUser._id}`)
         await redis.set(`refresh-token:${existingUser._id}`, refreshToken, "EX", configs.auth.token.refreshToken.expire * 24 * 60 * 60)
@@ -59,7 +60,7 @@ exports.sendOtp = async (req, res, next) => {
         let userKey = await generateUserKey(email)
         let otp = await generateOtp(email)
 
-        //TODO send OTP email to user
+        await otpSender({ email, otp })
 
         return res.redirect(`/auth/local/${userKey}`)
     } catch (error) {
