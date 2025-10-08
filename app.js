@@ -13,6 +13,7 @@ let passport = require("passport")
 
 let errorHandler = require("./middlewares/errorHandler")
 let googleStrategy = require("./strategies/googleStrategy")
+let localStrategy= require("./strategies/localStrategy")
 
 let authRouter = require("./routers/auth")
 
@@ -37,6 +38,7 @@ app.use(express.static(path.join(__dirname, "public")))
 
 //? strategies
 passport.use(googleStrategy)
+passport.use(localStrategy)
 //? routes
 app.use("/auth", authRouter)
 
