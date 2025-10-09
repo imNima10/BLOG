@@ -95,6 +95,8 @@ body {
   padding: 12px;
   border-radius: 8px;
   cursor: pointer;
+  text-decoration: none;
+  font-size: 14.5px;
   transition: 0.3s;
 }
 
