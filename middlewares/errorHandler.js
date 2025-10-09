@@ -20,5 +20,6 @@ module.exports = async (err, req, res, next) => {
     }
     let msg = err.message || "Internal Server Error"
     let status = err.status || 500
-    return errorResponse(res, status, { msg })
+    let data = err.data || ""           
+    return errorResponse(res, status, { msg, data })
 }
