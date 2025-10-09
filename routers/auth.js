@@ -1,10 +1,11 @@
 let express = require("express")
 let router = express.Router()
 
-let { getLogin, login, otpPage, sendOtp} = require("../controllers/auth")
+let { getLogin, login, otpPage, sendOtp, logout } = require("../controllers/auth")
 const passport = require("passport")
 let { page, send, verify } = require("../validators/auth")
 let validator = require("../middlewares/validator")
+let { authGuard, roleGuard } = require("../middlewares/guard")
 
 router.get("/login", getLogin)
 
@@ -24,5 +25,7 @@ router.post("/local/verify", validator(verify), (req, res, next) => {
 })
 router.get("/local/:userKey", validator(page, "params"), otpPage)
 router.post("/local", validator(send), sendOtp)
+
+router.get("/logout", authGuard, logout)
 
 module.exports = router

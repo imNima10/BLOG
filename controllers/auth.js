@@ -1,5 +1,5 @@
 const { successResponse, errorResponse } = require("../helpers/responses")
-const { createAccessToken, createRefreshToken } = require("../utils/token")
+const { createAccessToken, createRefreshToken, verifyRefreshToken } = require("../utils/token")
 let User = require("../models/user")
 let redis = require("../db/redis")
 const configs = require("../configs")
@@ -63,6 +63,21 @@ exports.sendOtp = async (req, res, next) => {
         await otpSender({ email, otp })
 
         return res.redirect(`/auth/local/${userKey}`)
+    } catch (error) {
+        next(error)
+    }
+}
+exports.logout = async (req, res, next) => {
+    try {
+        let user = req.user
+        let refreshToken = await redis.get(`refresh-token:${user._id}`)
+        await verifyRefreshToken(refreshToken)
+        await redis.del(`refresh-token:${user._id}`)
+        res.clearCookie("access-token", {
+            httpOnly: true,
+            sameSite: "strict",
+        })
+        return successResponse(res, 200, { msg: "logout successfully!!" })
     } catch (error) {
         next(error)
     }
