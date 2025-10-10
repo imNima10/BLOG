@@ -17,7 +17,7 @@ module.exports = (validate, from = "body") => {
                     return next(new Error(`Invalid validation source: ${from}`));
             }
 
-            await validate.validate(validateFrom);
+            await validate.validate(validateFrom, { abortEarly: false });
 
             next();
         } catch (error) {

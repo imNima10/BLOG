@@ -6,15 +6,15 @@ exports.authGuard = async (req, res, next) => {
         let accessToken = req.cookies["access-token"];
         
         if (!accessToken) {
-            throw new Error("Access token not found");
+            throw new Error("User not found");
         }
 
-        let payload = await verifyAccessToken(accessToken);
-        if (!payload._id) {
+        let result = await verifyAccessToken(accessToken);
+        if (!result.success) {
             throw new Error("Invalid or expired access token");
         }
 
-        let user = await User.findById(payload._id)
+        let user = await User.findById(result.user._id)
         if (!user) {
             throw new Error("User not Found, please login again");
         }
