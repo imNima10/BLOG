@@ -8,9 +8,17 @@ exports.createAccessToken = async (user) => {
         let token = await JWT.sign({ id: user._id }, configs.auth.token.accessToken.secretKey, {
             expiresIn: configs.auth.token.accessToken.expire + "m"
         })
-        return token
+        return {
+            success: true,
+            token
+        }
     } catch (error) {
-        throw error
+        return {
+            success: false,
+            status: 500,
+            message: "Failed to create access token",
+            data: error.message
+        };
     }
 }
 exports.createRefreshToken = async (user) => {
@@ -18,9 +26,17 @@ exports.createRefreshToken = async (user) => {
         let token = await JWT.sign({ id: user._id }, configs.auth.token.refreshToken.secretKey, {
             expiresIn: configs.auth.token.refreshToken.expire + "d"
         })
-        return token
+        return {
+            success: true,
+            token
+        }
     } catch (error) {
-        throw error
+        return {
+            success: false,
+            status: 500,
+            message: "Failed to create refresh token",
+            data: error.message
+        };
     }
 }
 exports.verifyAccessToken = async (token) => {
@@ -28,11 +44,19 @@ exports.verifyAccessToken = async (token) => {
         let payload = await JWT.verify(token, configs.auth.token.accessToken.secretKey)
         let isUserExists = await User.findById(payload.id)
         if (!isUserExists) {
-            throw new Error("User Not Found")
+            throw new Error("User not found")
         }
-        return isUserExists
+        return {
+            success: true,
+            user: isUserExists
+        }
     } catch (error) {
-        throw new Error(`Access token verification failed: ${error.message}`);
+        return {
+            success: false,
+            status: 401,
+            message: "Access token verification failed",
+            data: error.message
+        };
     }
 }
 exports.verifyRefreshToken = async (token) => {
@@ -40,10 +64,18 @@ exports.verifyRefreshToken = async (token) => {
         let payload = await JWT.verify(token, configs.auth.token.refreshToken.secretKey)
         let isUserExists = await User.findById(payload.id)
         if (!isUserExists) {
-            throw new Error("User Not Found")
+            throw new Error("Authentication failed. User no longer exists");
         }
-        return isUserExists
+        return {
+            success: true,
+            user: isUserExists
+        }
     } catch (error) {
-        throw new Error(`Refresh token verification failed: ${error.message}`);
+        return {
+            success: false,
+            status: 401,
+            message: "Refresh token verification failed",
+            data: error.message
+        };
     }
 }
