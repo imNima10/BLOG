@@ -5,7 +5,8 @@
   font-family: 'Vazirmatn', sans-serif;
 }
 
-html, body {
+html,
+body {
   height: 100%;
 }
 
@@ -117,4 +118,12 @@ body {
     height: 52px;
     font-size: 20px;
   }
+}
+
+.error {
+  color: #f56565;
+  font-size: 12px;
+  margin-top: 4px;
+  display: block;
+  text-align: left;
 }

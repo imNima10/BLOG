@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <title>تأیید کد - ورود با OTP</title>
     <link href="https://fonts.googleapis.com/css2?family=Vazirmatn&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/css/otp.css">
+    <link rel="stylesheet" href="/css/otp.css">
 </head>
 
 <body>
@@ -35,6 +35,24 @@
         </form>
     </div>
     <script src="/js/otp.js"></script>
+    <script src="/js/sweetalert.js"></script>
+    <script>
+        if ("<%=locals.messages.success%>") {
+            swal({
+                title: "Success",
+                text: "<%=locals.messages.success%>",
+                icon: "success",
+                button: "ok",
+            })
+        } else if ("<%=locals.messages.error%>") {
+            swal({
+                title: "Error",
+                text: "<%=locals.messages.error%>",
+                icon: "error",
+                button: "try again",
+            })
+        } 
+    </script>
 </body>
 
 </html>

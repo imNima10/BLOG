@@ -131,3 +131,10 @@ body {
     padding: 30px 20px;
   }
 }
+.error {
+  color: #f56565;
+  font-size: 12px;
+  margin-top: 4px;
+  display: block;
+  text-align: left;
+}

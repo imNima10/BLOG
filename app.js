@@ -13,7 +13,7 @@ let passport = require("passport")
 
 let errorHandler = require("./middlewares/errorHandler")
 let googleStrategy = require("./strategies/googleStrategy")
-let localStrategy= require("./strategies/localStrategy")
+let localStrategy = require("./strategies/localStrategy")
 
 let authRouter = require("./routers/auth")
 
@@ -29,7 +29,10 @@ app.use(session({
     secret: configs.session
 }))
 app.use(flash())
-app.use(helmet())
+app.use(helmet({
+    contentSecurityPolicy: false,
+    crossOriginEmbedderPolicy: false,
+}));
 
 app.set("view engine", "ejs")
 app.set("views", path.join(__dirname, "views"))
