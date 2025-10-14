@@ -17,8 +17,13 @@ router.get("/google/callback", passport.authenticate("google", { session: false,
 router.post("/local/verify", validator({ validate: verify,url:"/local",reqBody:"userKey"}), (req, res, next) => {
     passport.authenticate("local", { session: false, failureRedirect: "/auth/login" }, (err, user, info) => {
         if (err) return next(err);
-        if (!user) return next(info);
-
+        if (!user) {
+            req.flash("error", info.message)
+            if (info.type == "validation" || info.type == "expiredOtp") {
+                return res.redirect(`/auth/local/${req.body.userKey}`)
+            }
+            return res.redirect(`/auth/login`)
+        }
         req.user = user
         return login(req, res, next)
     })(req, res, next)
