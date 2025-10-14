@@ -15,10 +15,9 @@ module.exports = async (err, req, res, next) => {
             data: errorList
         });
 
-        return errorResponse(res, 422, {
-            msg: "Validation Error",
-            data: errorList
-        });
+        req.flash("validationError", errorList[0].message)
+        return res.redirect(req.url)
+
     }
     if (err.status == 401) {
         console.log({

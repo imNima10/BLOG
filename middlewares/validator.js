@@ -1,4 +1,4 @@
-module.exports = (validate, from = "body") => {
+module.exports = ({ validate, from = "body", url, reqBody }) => {
     return async (req, res, next) => {
         try {
             let validateFrom;
@@ -21,8 +21,12 @@ module.exports = (validate, from = "body") => {
 
             next();
         } catch (error) {
-
-            next(error)
+            let theUrl = url;
+            if (reqBody) {
+                theUrl = `${url}/${req[from][reqBody]}`;
+            }
+            req.url = theUrl;
+            next(error);
         }
-    };
+    }
 };

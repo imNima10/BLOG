@@ -25,13 +25,12 @@
                 <input type="text" maxlength="1" pattern="\d*" inputmode="numeric" name="n2">
                 <input type="text" maxlength="1" pattern="\d*" inputmode="numeric" name="n1">
             </div>
-
-            <button class="btn-primary" type="submit">تأیید</button>
-
-            <div class="meta">
-                <a class="resend" href="#">بازگشت به صفحه ورود</a>
-                <a href="#" class="resend">ارسال مجدد</a>
-            </div>
+            <%if(locals.messages.validationError){%>
+                <span class="validation-error">
+                    <%=locals.messages.validationError%>
+                </span>
+                <%}%>
+                    <button class="btn-primary" type="submit">تأیید</button>
         </form>
     </div>
     <script src="/js/otp.js"></script>

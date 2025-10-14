@@ -17,9 +17,14 @@
       <div class="input-field">
         <input type="email" name="email" placeholder="ایمیل" required>
       </div>
-      <button class="btn" type="submit">ورود</button>
+      <%if(locals.messages.validationError){%>
+        <span class="validation-error">
+          <%=locals.messages.validationError%>
+        </span>
+        <%}%>
+          <button class="btn" type="submit">ورود</button>
 
-      <div class="divider">یا</div>
+          <div class="divider">یا</div>
 
     </form>
     <a href="/auth/google" class="google-btn">

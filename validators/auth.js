@@ -7,17 +7,13 @@ exports.verify = yup.object({
         .length(6, "OTP must be exactly 6 digits")
         .required("OTP is required")
 });
-
-exports.page = yup.object({
-    userKey: yup.string().required("userKey is required")
-});
-
 exports.send = yup.object({
     email: yup
         .string()
+        .trim()
+        .lowercase()
         .matches(
-            /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+            /^[a-zA-Z0-9._%+-]+@gmail\.com$/,
             "Invalid email format"
         )
-        .required("Email is required"),
 });

@@ -127,3 +127,11 @@ body {
   display: block;
   text-align: left;
 }
+
+.validation-error {
+  color: #f56565;
+  font-size: 14px;
+  margin-top: 4px;
+  display: block;
+  text-align: left;
+}
