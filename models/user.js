@@ -16,6 +16,11 @@ let userSchema = new mongoose.Schema({
         enum: ["USER", "ADMIN"],
         default: "USER",
     },
+    profile: {
+        type: String,
+        default:"/images/default_profile.png",
+        required:true
+    },
 }, {
     timestamps: true
 })
