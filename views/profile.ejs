@@ -14,33 +14,36 @@
         <div class="profile-card">
             <a href="/" class="back-btn">&#8592; بازگشت</a>
 
+            <form action="/user/update" method="post" enctype="multipart/form-data">
             <div class="avatar-section">
                 <div class="avatar-container">
-                    <img src="" alt="Profile Picture" id="profile-img">
+                    <img src="<%=user.profile%>" alt="Profile Picture" id="profile-img">
                     <label for="avatar-input" class="upload-overlay">
                         <span>تغییر</span>
                     </label>
-                    <input type="file" id="avatar-input" name="avatar" accept="image/*">
+                    <input type="file" id="avatar-input" name="profile" accept="image/*">
                 </div>
             </div>
 
-            <form action="/profile/update" method="post">
-                <div class="input-group">
-                    <label for="username">نام کاربری</label>
-                    <input type="text" id="username" name="username" value="" required>
+            <div class="input-group">
+                <label for="username">نام کاربری</label>
+                <input type="text" id="username" name="username" value="<%=user.username%>" required>
+                <%if(locals.messages.validationError){%>
                     <span class="username-error">این نام کاربری تکراری است</span>
-                </div>
+                    <%}%>
+            </div>
 
 
-                <div class="input-group">
-                    <label for="email">ایمیل</label>
-                    <input type="email" id="email" name="email" value="user@example.com" disabled>
-                </div>
+            <div class="input-group">
+                <label for="email">ایمیل</label>
+                <input type="email" id="email" name="email" value="<%=user.email%>" disabled>
+            </div>
 
-                <button class="btn save-btn" type="submit">ذخیره تغییرات</button>
+            <button class="btn save-btn" type="submit">ذخیره تغییرات</button>
             </form>
-
-            <a href="/auth/logout" class="btn logout-btn">خروج از حساب</a>
+            <form action="/user/logout" method="post">
+                <button type="submit" class="btn logout-btn">خروج از حساب</button>
+            </form>
         </div>
     </div>
 
