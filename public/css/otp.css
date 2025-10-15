@@ -92,8 +92,13 @@ body {
 }
 
 .resend {
+  background: none;
+  border: none;
   color: #667eea;
+  cursor: pointer;
   text-decoration: none;
+  font: inherit;
+  padding: 0;
 }
 
 .resend:hover {

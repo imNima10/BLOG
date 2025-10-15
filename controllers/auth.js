@@ -59,16 +59,32 @@ exports.otpPage = async (req, res, next) => {
 
 exports.sendOtp = async (req, res, next) => {
     try {
-        let { email } = req.body
-        let { expired, remainingTime } = await getOtpDetails(email)
-        if (!expired) {
-            return errorResponse(res, 429, { msg: `OTP already send,please try again after ${remainingTime}` })
+        let { email, userKey } = req.body
+        if (email) {
+            let { expired, remainingTime } = await getOtpDetails(email)
+            if (!expired) {
+                req.flash("error", `OTP already send,please try again after ${remainingTime}`)
+                return res.redirect("/auth/login")
+            }
+            userKey = await generateUserKey(email)
+            let otp = await generateOtp(email)
+            await otpSender({ email, otp })
+        } else {
+            let isUserKeyValid = await getUserKeyDetails(userKey)
+            if (isUserKeyValid) {
+                let { expired, remainingTime } = await getOtpDetails(isUserKeyValid)
+                if (!expired) {
+                    req.flash("error", `OTP already send,please try again after ${remainingTime}`)
+                    return res.redirect(`/auth/local/${userKey}`)
+                }
+                let otp = await generateOtp(isUserKeyValid)
+                await otpSender({ email: isUserKeyValid, otp })
+            } else {
+                req.flash("error", `Invalid or expired login link , please request a new one`)
+                return res.redirect("/auth/login")
+            }
         }
-        let userKey = await generateUserKey(email)
-        let otp = await generateOtp(email)
-
-        await otpSender({ email, otp })
-
+        req.flash("success", "OTP send successfully")
         return res.redirect(`/auth/local/${userKey}`)
     } catch (error) {
         next(error)

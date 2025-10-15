@@ -32,6 +32,13 @@
                 <%}%>
                     <button class="btn-primary" type="submit">تأیید</button>
         </form>
+        <div class="meta">
+            <a class="resend" href="/auth/login">بازگشت به صفحه ورود</a>
+            <form action="/auth/local" method="post">
+                <input type="hidden" name="userKey" value="<%= userKey %>">
+                <button type="submit" class="resend">ارسال مجدد</button>
+            </form>
+        </div>
     </div>
     <script src="/js/otp.js"></script>
     <script src="/js/sweetalert.js"></script>
