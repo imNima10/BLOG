@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ایجاد پست جدید</title>
+  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/createPost.css">
+</head>
+
+<body>
+  <div class="new-post-wrapper">
+    <div class="new-post-card">
+      <a href="/" class="back-btn">&#8592; بازگشت</a>
+      <h1>ایجاد پست جدید</h1>
+
+      <form action="/post/new" method="post" enctype="multipart/form-data">
+
+        <div class="cover-upload">
+          <input type="file" id="cover" name="cover" accept="image/*" hidden>
+          <label for="cover" class="cover-label">
+            <img id="cover-img" src="undefined picture.png" alt="کاور پست">
+            <div class="overlay">📸 انتخاب تصویر کاور</div>
+          </label>
+        </div>
+
+        <div class="input-group">
+          <label for="title">عنوان پست</label>
+          <input type="text" id="title" name="title" placeholder="مثلاً یادگیری Node.js در یک هفته" required>
+        </div>
+
+        <div class="input-group">
+          <label for="description">توضیحات کوتاه</label>
+          <textarea id="description" name="description" rows="4"
+            placeholder="یک متن کوتاه درباره پست خود بنویسید..." required></textarea>
+        </div>
+
+        <button type="submit" class="btn submit-btn">انتشار پست</button>
+      </form>
+    </div>
+  </div>
+
+  <script src="/js/createPost.js"></script>
+</body>
+
+</html>
