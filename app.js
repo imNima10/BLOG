@@ -17,6 +17,7 @@ let localStrategy = require("./strategies/localStrategy")
 
 let authRouter = require("./routers/auth")
 let userRouter = require("./routers/user")
+let indexRouter = require("./routers/index")
 
 //? middlewares
 app.use(express.json())
@@ -46,6 +47,7 @@ passport.use(localStrategy)
 //? routes
 app.use("/auth", authRouter)
 app.use("/user", userRouter)
+app.use("/", indexRouter)
 
 app.use((req, res) => {
     return res.status(404).render("404")
