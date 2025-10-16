@@ -19,6 +19,14 @@ module.exports = async (err, req, res, next) => {
         return res.redirect(req.url)
 
     }
+    if (err.status == 404) {
+        console.log({
+            success: false,
+            error: "Not found",
+            data: err.message 
+        });
+        return res.status(401).render("404");
+    }
     if (err.status == 401) {
         console.log({
             success: false,
