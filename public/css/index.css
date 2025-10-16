@@ -117,3 +117,29 @@ body {
     grid-template-columns: 1fr;
   }
 }
+
+.no-posts {
+  text-align: center;
+  margin-top: 5rem;
+  color: #555;
+  font-family: 'Vazirmatn', sans-serif;
+}
+
+.no-posts img {
+  width: 120px;
+  margin-bottom: 1rem;
+  opacity: 0.7;
+}
+
+.no-posts p {
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
+}
+
+.no-posts .create-btn {
+  background-color: #007bff;
+  color: #fff;
+  padding: 0.6rem 1.2rem;
+  border-radius: 5px;
+  text-decoration: none;
+}

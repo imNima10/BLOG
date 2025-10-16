@@ -14,21 +14,30 @@
     <header class="blog-header">
       <h1>بلاگ</h1>
       <div class="actions">
-        <a href="/post/new" class="btn create-btn">ایجاد پست جدید</a>
-        <a href="/profile" class="btn profile-btn">پروفایل من</a>
+        <a href="#" class="btn create-btn">ایجاد پست جدید</a>
+        <a href="/user/me" class="btn profile-btn">پروفایل من</a>
       </div>
     </header>
 
     <main class="posts-container">
-      <div class="post-card">
-        <img src="undefined picture.png" alt="پست ۱">
-        <div class="post-info">
-          <h2>عنوان پست</h2>
-          <p>این یک متن نمونه برای توضیح کوتاه پست است که کاربر می‌تواند آن را مطالعه کند.</p>
-          <a href="/post/1" class="read-more">ادامه مطلب</a>
-        </div>
-      </div>
-      </div>
+      <%if(posts.length){%>
+        <%posts.forEach(post=>{%>
+          <div class="post-card">
+            <img src="<%=post.cover%>" alt="post cover">
+            <div class="post-info">
+              <h2><%=post.title%></h2>
+              <p><%=post.description%></p>
+              <a href="#" class="read-more">ادامه مطلب</a>
+            </div>
+          </div>
+          <%})%>
+            <% } else { %>
+              <div class="no-posts">
+                <img src="/images/empty.svg" alt="هیچ پستی نیست">
+                <p>هنوز هیچ پستی منتشر نشده است.</p>
+                <a href="#" class="btn create-btn">اولین پست را ایجاد کنید</a>
+              </div>
+              <% } %>
     </main>
   </div>
 </body>
