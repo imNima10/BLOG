@@ -15,25 +15,25 @@
       <a href="/" class="back-btn">&#8592; بازگشت</a>
       <h1>ایجاد پست جدید</h1>
 
-      <form action="/post/new" method="post" enctype="multipart/form-data">
+      <form action="/post/create" method="post" enctype="multipart/form-data">
 
         <div class="cover-upload">
           <input type="file" id="cover" name="cover" accept="image/*" hidden>
           <label for="cover" class="cover-label">
-            <img id="cover-img" src="undefined picture.png" alt="کاور پست">
+            <img id="cover-img" src="/images/photo.svg" alt="کاور پست">
             <div class="overlay">📸 انتخاب تصویر کاور</div>
           </label>
         </div>
 
         <div class="input-group">
           <label for="title">عنوان پست</label>
-          <input type="text" id="title" name="title" placeholder="مثلاً یادگیری Node.js در یک هفته" required>
+          <input type="text" id="title" name="title" placeholder="عنوان پست" required>
         </div>
 
         <div class="input-group">
-          <label for="description">توضیحات کوتاه</label>
+          <label for="description">توضیحات</label>
           <textarea id="description" name="description" rows="4"
-            placeholder="یک متن کوتاه درباره پست خود بنویسید..." required></textarea>
+            placeholder="توضیحات" required></textarea>
         </div>
 
         <button type="submit" class="btn submit-btn">انتشار پست</button>
