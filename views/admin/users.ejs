@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>مدیریت کاربران</title>
   <link href="https://fonts.googleapis.com/css2?family=Vazirmatn&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="c.css">
+  <link rel="stylesheet" href="/css/admin.css">
 </head>
 
 <body>
@@ -14,9 +14,9 @@
     <aside class="sidebar">
       <h2>مدیریت بلاگ</h2>
       <nav>
-        <a href="dashboard.html">🏠 داشبورد</a>
-        <a href="posts.html">📝 پست‌ها</a>
-        <a href="users.html" class="active">👥 کاربران</a>
+        <a href="/admin">🏠 داشبورد</a>
+        <a href="/admin/posts">📝 پست‌ها</a>
+        <a href="/admin/users" class="active">👥 کاربران</a>
         <a href="/">🔙 بازگشت به سایت</a>
       </nav>
     </aside>
@@ -40,29 +40,50 @@
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td><img src="profile1.png" class="avatar"></td>
-              <td>nima</td>
-              <td>nima@example.com</td>
-              <td>admin</td>
-              <td>
-                <a href="#" class="btn small danger">مسدود</a>
-                <a href="#" class="btn small">تغییر نقش</a>
-              </td>
-            </tr>
-            <tr>
-              <td><img src="profile2.png" class="avatar"></td>
-              <td>mona</td>
-              <td>mona@example.com</td>
-              <td>user</td>
-              <td>
-                <a href="#" class="btn small danger">مسدود</a>
-                <a href="#" class="btn small">تغییر نقش</a>
-              </td>
-            </tr>
+            <%users.forEach(user=>{%>
+              <tr>
+                <td><img src="<%=user.profile%>" class="avatar"></td>
+                <td>
+                  <%=user.username%>
+                </td>
+                <td>
+                  <%=user.email%>
+                </td>
+                <td>
+                  <%=user.role%>
+                </td>
+                <td>
+                  <a href="#" class="btn small danger">مسدود</a>
+                  <a href="#" class="btn small">تغییر نقش</a>
+                </td>
+              </tr>
+              <%})%>
+          </tbody>
+
           </tbody>
         </table>
       </section>
+      <div class="pagination">
+        <% if (pagination.page> 1) { %>
+          <a href="?page=<%= +pagination.page - 1 %>" class="page-btn prev">قبلی</a>
+          <% } else { %>
+            <span class="page-btn prev disabled">قبلی</span>
+            <% } %>
+
+              <div class="page-numbers">
+                <% for (let i=1; i <=pagination.totalPage; i++) { %>
+                  <a href="?page=<%= i %>" class="page-number <%= i === pagination.page ? 'active' : '' %>">
+                    <%= i %>
+                  </a>
+                  <% } %>
+              </div>
+
+              <% if (pagination.page < pagination.totalPage) { %>
+                <a href="?page=<%= +pagination.page + 1 %>" class="page-btn next">بعدی</a>
+                <% } else { %>
+                  <span class="page-btn next disabled">بعدی</span>
+                  <% } %>
+      </div>
     </main>
   </div>
 </body>
