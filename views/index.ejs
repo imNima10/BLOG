@@ -26,8 +26,12 @@
           <div class="post-card">
             <img src="<%=post.cover%>" alt="post cover">
             <div class="post-info">
-              <h2><%=post.title%></h2>
-              <p><%=post.description%></p>
+              <h2>
+                <%=post.title%>
+              </h2>
+              <p>
+                <%=post.description%>
+              </p>
               <a href="/post/<%=post.slug%>" class="read-more">ادامه مطلب</a>
             </div>
           </div>
@@ -40,25 +44,46 @@
               </div>
               <% } %>
     </main>
+    <div class="pagination">
+      <% if (pagination.page> 1) { %>
+        <a href="?page=<%= +pagination.page - 1 %>" class="page-btn prev">قبلی</a>
+        <% } else { %>
+          <span class="page-btn prev disabled">قبلی</span>
+          <% } %>
+
+            <div class="page-numbers">
+              <% for (let i=1; i <=pagination.totalPage; i++) { %>
+                <a href="?page=<%= i %>" class="page-number <%= i === pagination.page ? 'active' : '' %>">
+                  <%= i %>
+                </a>
+                <% } %>
+            </div>
+
+            <% if (pagination.page < pagination.totalPage) { %>
+              <a href="?page=<%= +pagination.page + 1 %>" class="page-btn next">بعدی</a>
+              <% } else { %>
+                <span class="page-btn next disabled">بعدی</span>
+                <% } %>
+    </div>
   </div>
-      <script src="/js/sweetalert.js"></script>
-    <script>
-        if ("<%=locals.messages.success%>") {
-            swal({
-                title: "Success",
-                text: "<%=locals.messages.success%>",
-                icon: "success",
-                button: "ok",
-            })
-        } else if ("<%=locals.messages.error%>") {
-            swal({
-                title: "Error",
-                text: "<%=locals.messages.error%>",
-                icon: "error",
-                button: "try again",
-            })
-        } 
-    </script>
+  <script src="/js/sweetalert.js"></script>
+  <script>
+    if ("<%=locals.messages.success%>") {
+      swal({
+        title: "Success",
+        text: "<%=locals.messages.success%>",
+        icon: "success",
+        button: "ok",
+      })
+    } else if ("<%=locals.messages.error%>") {
+      swal({
+        title: "Error",
+        text: "<%=locals.messages.error%>",
+        icon: "error",
+        button: "try again",
+      })
+    } 
+  </script>
 </body>
 
 </html>

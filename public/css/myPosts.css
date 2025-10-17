@@ -144,3 +144,44 @@ body {
   border-radius: 5px;
   text-decoration: none;
 }
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  margin-top: 40px;
+  flex-wrap: wrap;
+}
+
+.page-btn,
+.page-number {
+  text-decoration: none;
+  color: #fff;
+  background: #667eea;
+  padding: 8px 14px;
+  border-radius: 8px;
+  font-size: 14px;
+  transition: 0.3s ease;
+}
+
+.page-btn:hover,
+.page-number:hover {
+  background: #5a67d8;
+}
+
+.page-number.active {
+  background: #764ba2;
+  font-weight: bold;
+  cursor: default;
+}
+
+.page-btn.disabled {
+  background: #ccc;
+  cursor: not-allowed;
+}
+
+.page-numbers {
+  display: flex;
+  gap: 6px;
+}

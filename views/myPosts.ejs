@@ -44,6 +44,27 @@
               </div>
               <% } %>
     </main>
+    <div class="pagination">
+      <% if (pagination.page> 1) { %>
+        <a href="/post/my/?page=<%= +pagination.page - 1 %>" class="page-btn prev">قبلی</a>
+        <% } else { %>
+          <span class="page-btn prev disabled">قبلی</span>
+          <% } %>
+
+            <div class="page-numbers">
+              <% for (let i=1; i <=pagination.totalPage; i++) { %>
+                <a href="/post/my/?page=<%= i %>" class="page-number <%= i === pagination.page ? 'active' : '' %>">
+                  <%= i %>
+                </a>
+                <% } %>
+            </div>
+
+            <% if (pagination.page < pagination.totalPage) { %>
+              <a href="/post/my/?page=<%= +pagination.page + 1 %>" class="page-btn next">بعدی</a>
+              <% } else { %>
+                <span class="page-btn next disabled">بعدی</span>
+                <% } %>
+    </div>
   </div>
   <script src="/js/sweetalert.js"></script>
   <script>

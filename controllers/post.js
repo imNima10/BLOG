@@ -3,6 +3,8 @@ const buildError = require("../utils/buildError")
 let Post = require("./../models/post")
 let time = require("./../utils/time")
 let fs = require("fs")
+let pagination = require("./../utils/pagination")
+
 exports.getOnePost = async (req, res, next) => {
     try {
         let { slug } = req.params
@@ -56,15 +58,20 @@ exports.createPost = async (req, res, next) => {
 }
 exports.myPostsPage = async (req, res, next) => {
     try {
+        let { page = 1, limit = 4 } = req.query
         let user = req.user
         let posts = await Post.find({
             user: user._id
         })
             .populate("user", "username profile")
             .sort({ createdAt: "desc" })
+            .limit(limit)
+            .skip((page - 1) * limit)
             .lean()
+        let postsCount = await Post.countDocuments({ user: user._id })
         return res.render("myPosts", {
-            posts: posts || []
+            posts: posts || [],
+            pagination: pagination(page, limit, postsCount, "post")
         })
     } catch (error) {
         next(error)
