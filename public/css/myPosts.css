@@ -51,16 +51,17 @@ body {
 .create-btn {
   background: #667eea;
 }
-.create-btn:hover {
-  background: #5a67d8;
-}
+.create-btn:hover { background: #5a67d8; }
 
 .profile-btn {
   background: #764ba2;
 }
-.profile-btn:hover {
-  background: #6b46c1;
+.profile-btn:hover { background: #6b46c1; }
+
+.home-btn {
+  background: #38b2ac;
 }
+.home-btn:hover { background: #319795; }
 
 .posts-container {
   display: grid;
@@ -142,10 +143,4 @@ body {
   padding: 0.6rem 1.2rem;
   border-radius: 5px;
   text-decoration: none;
-}
-.my-posts-btn {
-  background: #38b2ac;
-}
-.my-posts-btn:hover {
-  background: #319795;
 }
