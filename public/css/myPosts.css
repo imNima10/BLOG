@@ -185,3 +185,10 @@ body {
   display: flex;
   gap: 6px;
 }
+
+.admin-btn {
+  background: #ff8c00;
+}
+.admin-btn:hover {
+  background: #e07b00;
+}

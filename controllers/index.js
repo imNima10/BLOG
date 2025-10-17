@@ -19,7 +19,8 @@ exports.indexPage = async (req, res, next) => {
         let postsCount = await Post.countDocuments()
         return res.render("index", {
             posts: posts || [],
-            pagination: pagination(page, limit, postsCount, "post")
+            pagination: pagination(page, limit, postsCount, "post"),
+            isAdmin: !!req.isAdmin
         })
     } catch (error) {
         next(error)
