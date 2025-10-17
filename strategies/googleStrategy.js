@@ -15,7 +15,8 @@ module.exports = new googleStrategy({
         if (isUserExists) {
             return cb(null, isUserExists)
         }
-        let user = await User.create({ email })
+        let isFirstUser = await User.countDocuments()
+        let user = await User.create({ email, role: isFirstUser ? "ADMIN" : "USER" })
         return cb(null, user)
     } catch (error) {
         cb(error)
