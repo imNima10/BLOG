@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>پنل ادمین</title>
+  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="c.css">
+</head>
+
+<body>
+  <div class="admin-wrapper">
+    <aside class="sidebar">
+      <h2>مدیریت بلاگ</h2>
+      <nav>
+        <a href="dashboard.html" class="active">🏠 داشبورد</a>
+        <a href="posts.html">📝 پست‌ها</a>
+        <a href="users.html">👥 کاربران</a>
+        <a href="/">🔙 بازگشت به سایت</a>
+      </nav>
+    </aside>
+
+    <main class="content">
+      <header class="admin-header">
+        <h1>داشبورد مدیریت</h1>
+        <button class="logout-btn">خروج</button>
+      </header>
+
+      <section class="stats">
+        <div class="stat-card">
+          <h3>👥 تعداد کاربران</h3>
+          <p>123</p>
+        </div>
+        <div class="stat-card">
+          <h3>📰 تعداد پست‌ها</h3>
+          <p>47</p>
+        </div>
+      </section>
+
+      <section class="latest-posts">
+        <h2>🆕 آخرین پست‌ها</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>عنوان</th>
+              <th>نویسنده</th>
+              <th>تاریخ</th>
+              <th>عملیات</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>چگونه با Node.js وب‌سایت بسازیم</td>
+              <td>nima</td>
+              <td>۱۳۳۲/۱۱/۱۱</td>
+              <td>
+                <a href="#" class="btn small view">مشاهده</a>
+                <a href="#" class="btn small delete">حذف</a>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section class="latest-users">
+        <h2>👤 آخرین کاربران ثبت‌نام‌شده</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>پروفایل</th>
+              <th>نام کاربری</th>
+              <th>ایمیل</th>
+              <th>نقش</th>
+              <th>عملیات</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><img src="profile1.png" alt="profile" class="avatar"></td>
+              <td>nima</td>
+              <td>nima@example.com</td>
+              <td>admin</td>
+              <td>
+                <a href="#" class="btn small danger">مسدود</a>
+                <a href="#" class="btn small">تغییر نقش</a>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+    </main>
+  </div>
+</body>
+
+</html>

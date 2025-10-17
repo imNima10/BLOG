@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>مدیریت کاربران</title>
+  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="c.css">
+</head>
+
+<body>
+  <div class="admin-wrapper">
+    <aside class="sidebar">
+      <h2>مدیریت بلاگ</h2>
+      <nav>
+        <a href="dashboard.html">🏠 داشبورد</a>
+        <a href="posts.html">📝 پست‌ها</a>
+        <a href="users.html" class="active">👥 کاربران</a>
+        <a href="/">🔙 بازگشت به سایت</a>
+      </nav>
+    </aside>
+
+    <main class="content">
+      <header class="admin-header">
+        <h1>مدیریت کاربران</h1>
+        <button class="logout-btn">خروج</button>
+      </header>
+
+      <section class="latest-users">
+        <h2>👤 آخرین کاربران ثبت‌نام‌شده</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>پروفایل</th>
+              <th>نام کاربری</th>
+              <th>ایمیل</th>
+              <th>نقش</th>
+              <th>عملیات</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><img src="profile1.png" class="avatar"></td>
+              <td>nima</td>
+              <td>nima@example.com</td>
+              <td>admin</td>
+              <td>
+                <a href="#" class="btn small danger">مسدود</a>
+                <a href="#" class="btn small">تغییر نقش</a>
+              </td>
+            </tr>
+            <tr>
+              <td><img src="profile2.png" class="avatar"></td>
+              <td>mona</td>
+              <td>mona@example.com</td>
+              <td>user</td>
+              <td>
+                <a href="#" class="btn small danger">مسدود</a>
+                <a href="#" class="btn small">تغییر نقش</a>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+    </main>
+  </div>
+</body>
+
+</html>
