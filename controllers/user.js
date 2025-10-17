@@ -21,7 +21,8 @@ exports.logout = async (req, res, next) => {
             httpOnly: true,
             sameSite: "strict",
         })
-        return successResponse(res, 200, { msg: "Logout successful" })
+        req.flash("success", "Logout successful")
+        return res.redirect("/auth/login")
     } catch (error) {
         next(error)
     }

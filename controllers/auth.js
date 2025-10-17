@@ -43,7 +43,8 @@ exports.login = async (req, res, next) => {
         await redis.del(`refresh-token:${existingUser._id}`)
         await redis.set(`refresh-token:${existingUser._id}`, refreshToken.token, "EX", configs.auth.token.refreshToken.expire * 24 * 60 * 60)
 
-        return successResponse(res, 200, { msg: "Login successful", data: existingUser })
+        req.flash("success", "welcome")
+        return res.redirect("/")
     } catch (error) {
         next(error)
     }
