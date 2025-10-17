@@ -19,6 +19,10 @@
         <a href="/" class="btn back-btn">بازگشت به بلاگ</a>
         <%if(canUpdate){%>
           <a href="/post/update/<%=post._id%>/" class="btn edit-btn">&#9998;</a>
+          <form action="/post/delete/<%= post._id %>" method="post"
+            onsubmit="return confirm('آیا از حذف این پست مطمئن هستید؟')" style="display:inline;">
+            <button type="submit" class="btn delete-btn">&#128465;</button>
+          </form>
           <%}%>
       </div>
     </header>

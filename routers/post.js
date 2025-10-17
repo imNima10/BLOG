@@ -1,7 +1,7 @@
 let express = require("express")
 let router = express.Router()
 
-let { getOnePost, createPostPage, createPost, myPostsPage, getUpdatePost, updatePost } = require("../controllers/post")
+let { getOnePost, createPostPage, createPost, myPostsPage, getUpdatePost, updatePost, deletePost } = require("../controllers/post")
 let { authGuard, roleGuard } = require("../middlewares/guard")
 let { uploaderStorage } = require("../middlewares/uploader")
 let uploader = uploaderStorage({ destination: "covers" })
@@ -15,6 +15,8 @@ router.get("/my", authGuard, myPostsPage)
 router.get("/update/:id", authGuard, getUpdatePost)
 
 router.post("/update/:id", authGuard, uploader.single("cover"), updatePost)
+
+router.post("/delete/:id", authGuard, deletePost)
 
 router.get("/:slug", authGuard, getOnePost)
 

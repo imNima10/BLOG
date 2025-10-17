@@ -148,3 +148,20 @@ body {
     height: 220px;
   }
 }
+.delete-btn {
+  background: #e53e3e;
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  border: none;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.delete-btn:hover {
+  background: #c53030;
+}

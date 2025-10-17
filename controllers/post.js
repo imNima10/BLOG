@@ -132,3 +132,25 @@ exports.updatePost = async (req, res, next) => {
         next(error)
     }
 }
+exports.deletePost = async (req, res, next) => {
+    try {
+        let user = req.user
+        let { id } = req.params
+
+        let isIdValid = await isValidObjectId(id)
+        if (!isIdValid) {
+            throw buildError("post not found", 404)
+        }
+
+        let post = await Post.findById(id)
+        if (!post || post.user.toString() != user._id.toString()) {
+            throw buildError("post not found", 404)
+        }
+        await Post.findByIdAndDelete(id)
+
+        req.flash("success", "delete successfully");
+        return res.redirect(`/post/my`);
+    } catch (error) {
+        next(error)
+    }
+}
