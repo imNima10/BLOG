@@ -4,6 +4,8 @@ let Post = require("./../models/post")
 let time = require("./../utils/time")
 let fs = require("fs")
 let pagination = require("./../utils/pagination")
+const path = require("path")
+let summary = require("../utils/summary")
 
 exports.getOnePost = async (req, res, next) => {
     try {
@@ -68,6 +70,12 @@ exports.myPostsPage = async (req, res, next) => {
             .limit(limit)
             .skip((page - 1) * limit)
             .lean()
+
+        posts = posts.map(post => ({
+            ...post,
+            summary: summary(post)
+        }));
+
         let postsCount = await Post.countDocuments({ user: user._id })
         return res.render("myPosts", {
             posts: posts || [],
