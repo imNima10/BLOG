@@ -10,7 +10,7 @@ exports.getOnePost = async (req, res, next) => {
         if (!post) {
             throw buildError("post not found", 404)
         }
-        post.updatedAt=time(post.updatedAt)
+        post.updatedAt = time(post.updatedAt)
         return res.render("post", {
             post
         })
@@ -44,6 +44,22 @@ exports.createPost = async (req, res, next) => {
         }
         req.flash("success", "create successfully");
         return res.redirect(`/post/${post.slug}`);
+    } catch (error) {
+        next(error)
+    }
+}
+exports.myPostsPage = async (req, res, next) => {
+    try {
+        let user = req.user
+        let posts = await Post.find({
+            user: user._id
+        })
+            .populate("user", "username profile")
+            .sort({ createdAt: "desc" })
+            .lean()
+        return res.render("myPosts", {
+            posts: posts || []
+        })
     } catch (error) {
         next(error)
     }
