@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>مدیریت پست‌ها</title>
   <link href="https://fonts.googleapis.com/css2?family=Vazirmatn&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="c.css">
+  <link rel="stylesheet" href="/css/admin.css">
 </head>
 
 <body>
@@ -14,8 +14,8 @@
     <aside class="sidebar">
       <h2>مدیریت بلاگ</h2>
       <nav>
-        <a href="dashboard.html">🏠 داشبورد</a>
-        <a href="posts.html" class="active">📝 پست‌ها</a>
+        <a href="/admin">🏠 داشبورد</a>
+        <a href="/admin/posts" class="active">📝 پست‌ها</a>
         <a href="users.html">👥 کاربران</a>
         <a href="/">🔙 بازگشت به سایت</a>
       </nav>
@@ -28,7 +28,7 @@
       </header>
 
       <section class="latest-posts">
-        <h2>🆕 آخرین پست‌ها</h2>
+        <h2>🆕 پست‌ها</h2>
         <table>
           <thead>
             <tr>
@@ -39,27 +39,47 @@
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td>چگونه با Node.js وب‌سایت بسازیم</td>
-              <td>nima</td>
-              <td>۱۴۰۳/۰۷/۲۱</td>
-              <td>
-                <a href="#" class="btn small view">مشاهده</a>
-                <a href="#" class="btn small delete">حذف</a>
-              </td>
-            </tr>
-            <tr>
-              <td>10 نکته برای طراحی رابط کاربری بهتر</td>
-              <td>fatemeh</td>
-              <td>۱۴۰۳/۰۷/۲۰</td>
-              <td>
-                <a href="#" class="btn small view">مشاهده</a>
-                <a href="#" class="btn small delete">حذف</a>
-              </td>
-            </tr>
+            <%posts.forEach(post=>{%>
+              <tr>
+                <td>
+                  <%=post.title%>
+                </td>
+                <td>
+                  <%=post.user.username%>
+                </td>
+                <td>
+                  <%=post.updatedAt%>
+                </td>
+                <td>
+                  <a href="#" class="btn small view">مشاهده</a>
+                  <a href="#" class="btn small delete">حذف</a>
+                </td>
+              </tr>
+              <%})%>
           </tbody>
         </table>
       </section>
+      <div class="pagination">
+        <% if (pagination.page> 1) { %>
+          <a href="?page=<%= +pagination.page - 1 %>" class="page-btn prev">قبلی</a>
+          <% } else { %>
+            <span class="page-btn prev disabled">قبلی</span>
+            <% } %>
+
+              <div class="page-numbers">
+                <% for (let i=1; i <=pagination.totalPage; i++) { %>
+                  <a href="?page=<%= i %>" class="page-number <%= i === pagination.page ? 'active' : '' %>">
+                    <%= i %>
+                  </a>
+                  <% } %>
+              </div>
+
+              <% if (pagination.page < pagination.totalPage) { %>
+                <a href="?page=<%= +pagination.page + 1 %>" class="page-btn next">بعدی</a>
+                <% } else { %>
+                  <span class="page-btn next disabled">بعدی</span>
+                  <% } %>
+      </div>
     </main>
   </div>
 </body>
