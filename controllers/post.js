@@ -1,6 +1,8 @@
+const { isValidObjectId } = require("mongoose")
 const buildError = require("../utils/buildError")
 let Post = require("./../models/post")
 let time = require("./../utils/time")
+let fs = require("fs")
 exports.getOnePost = async (req, res, next) => {
     try {
         let { slug } = req.params
@@ -22,7 +24,9 @@ exports.getOnePost = async (req, res, next) => {
 }
 exports.createPostPage = async (req, res, next) => {
     try {
-        return res.render("createPost")
+        return res.render("createPost", {
+            update: false,
+        })
     } catch (error) {
         next(error)
     }
@@ -62,6 +66,68 @@ exports.myPostsPage = async (req, res, next) => {
         return res.render("myPosts", {
             posts: posts || []
         })
+    } catch (error) {
+        next(error)
+    }
+}
+exports.getUpdatePost = async (req, res, next) => {
+    try {
+        let { id } = req.params
+        let user = req.user
+        let isIdValid = await isValidObjectId(id)
+        if (!isIdValid) {
+            throw buildError("post not found", 404)
+        }
+        let post = await Post.findById(id)
+        if (!post || post.user.toString() != user._id.toString()) {
+            throw buildError("post not found", 404)
+        }
+
+        return res.render("createPost", {
+            update: true,
+            post
+        })
+    } catch (error) {
+        next(error)
+    }
+}
+exports.updatePost = async (req, res, next) => {
+    try {
+        let { id } = req.params
+        let { title, description } = req.body
+        let user = req.user;
+        let cover = req.file;
+
+        let isIdValid = await isValidObjectId(id)
+        if (!isIdValid) {
+            throw buildError("post not found", 404)
+        }
+        let post = await Post.findById(id)
+        if (!post || post.user.toString() != user._id.toString()) {
+            throw buildError("post not found", 404)
+        }
+
+        let filePath = post.cover
+        if (cover) {
+            let thePath = path.join(__dirname, "..", "public", filePath)
+            if (fs.existsSync(thePath)) {
+                fs.unlink(thePath, (err) => {
+                    if (err) {
+                        console.log(err);
+                    }
+                })
+            }
+            filePath = `/images/covers/${cover.filename}`
+        }
+
+        let updatedPost = await Post.findByIdAndUpdate(id, {
+            cover: filePath,
+            description,
+            title,
+        }, { new: true })
+
+        req.flash("success", "update successfully");
+        return res.redirect(`/post/${updatedPost.slug}`);
     } catch (error) {
         next(error)
     }

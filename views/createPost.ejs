@@ -12,32 +12,61 @@
 <body>
   <div class="new-post-wrapper">
     <div class="new-post-card">
-      <a href="/" class="back-btn">&#8592; بازگشت</a>
-      <h1>ایجاد پست جدید</h1>
+      <%if(update){%>
+        <a href="/post/<%=post.slug%>" class="back-btn">&#8592; بازگشت</a>
+        <%}else{%>
+          <a href="/" class="back-btn">&#8592; بازگشت</a>
+          <%}%>
+            <%if(update){%>
+              <h1>تغییر در پست</h1>
+              <%}else{%>
+                <h1>ایجاد پست جدید</h1>
+                <%}%>
+                  <%if(update){%>
+                    <form action="/post/update/<%=post._id%>" method="post" enctype="multipart/form-data">
+                      <%}else{%>
+                        <form action="/post/create" method="post" enctype="multipart/form-data">
+                          <%}%>
 
-      <form action="/post/create" method="post" enctype="multipart/form-data">
+                            <div class="cover-upload">
+                              <input type="file" id="cover" name="cover" accept="image/*" hidden>
+                              <label for="cover" class="cover-label">
+                                <%if(update){%>
+                                  <img id="cover-img" src="<%=post.cover%>" alt="کاور پست">
+                                  <div class="overlay">📸 تغییر تصویر کاور</div>
+                                  <%}else{%>
+                                    <img id="cover-img" src="/images/photo.svg" alt="کاور پست">
+                                    <div class="overlay">📸 انتخاب تصویر کاور</div>
+                                    <%}%>
+                              </label>
+                            </div>
 
-        <div class="cover-upload">
-          <input type="file" id="cover" name="cover" accept="image/*" hidden>
-          <label for="cover" class="cover-label">
-            <img id="cover-img" src="/images/photo.svg" alt="کاور پست">
-            <div class="overlay">📸 انتخاب تصویر کاور</div>
-          </label>
-        </div>
+                            <div class="input-group">
+                              <label for="title">عنوان پست</label>
+                              <%if(update){%>
+                                <input type="text" id="title" name="title" placeholder="عنوان پست" required
+                                  value="<%=post.title%>">
+                                <%}else{%>
+                                  <input type="text" id="title" name="title" placeholder="عنوان پست" required>
+                                  <%}%>
+                            </div>
 
-        <div class="input-group">
-          <label for="title">عنوان پست</label>
-          <input type="text" id="title" name="title" placeholder="عنوان پست" required>
-        </div>
-
-        <div class="input-group">
-          <label for="description">توضیحات</label>
-          <textarea id="description" name="description" rows="4"
-            placeholder="توضیحات" required></textarea>
-        </div>
-
-        <button type="submit" class="btn submit-btn">انتشار پست</button>
-      </form>
+                            <div class="input-group">
+                              <label for="description">توضیحات</label>
+                              <%if(update){%>
+                                <textarea id="description" name="description" rows="4" placeholder="توضیحات"
+                                  required><%=post.description%></textarea>
+                                <%}else{%>
+                                  <textarea id="description" name="description" rows="4" placeholder="توضیحات"
+                                    required></textarea>
+                                  <%}%>
+                            </div>
+                            <%if(update){%>
+                              <button type="submit" class="btn submit-btn">اعمال تغییرات</button>
+                              <%}else{%>
+                                <button type="submit" class="btn submit-btn">انتشار پست</button>
+                                <%}%>
+                        </form>
     </div>
   </div>
 
