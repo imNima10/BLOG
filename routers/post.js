@@ -4,7 +4,7 @@ let router = express.Router()
 let { getOnePost,createPostPage,createPost } = require("../controllers/post")
 let { authGuard, roleGuard } = require("../middlewares/guard")
 let { uploaderStorage } = require("../middlewares/uploader")
-let uploader = uploaderStorage({ destination: "profiles" })
+let uploader = uploaderStorage({ destination: "covers" })
 
 router.get("/create", authGuard, createPostPage)
 

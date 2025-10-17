@@ -1,5 +1,6 @@
 const buildError = require("../utils/buildError")
 let Post = require("./../models/post")
+let time = require("./../utils/time")
 exports.getOnePost = async (req, res, next) => {
     try {
         let { slug } = req.params
@@ -9,6 +10,7 @@ exports.getOnePost = async (req, res, next) => {
         if (!post) {
             throw buildError("post not found", 404)
         }
+        post.updatedAt=time(post.updatedAt)
         return res.render("post", {
             post
         })
