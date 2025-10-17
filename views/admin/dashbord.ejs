@@ -24,7 +24,9 @@
     <main class="content">
       <header class="admin-header">
         <h1>داشبورد مدیریت</h1>
-        <button class="logout-btn">خروج</button>
+        <form action="/user/logout" method="post">
+          <button class="logout-btn">خروج</button>
+        </form>
       </header>
 
       <section class="stats">
@@ -90,7 +92,7 @@
           <tbody>
             <%lastUsers.forEach(user=>{%>
               <tr>
-                <td><img src="profile1.png" alt="profile" class="avatar"></td>
+                <td><img src="<%=user.profile%>" alt="profile" class="avatar"></td>
                 <td>
                   <%=user.username%>
                 </td>
