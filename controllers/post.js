@@ -162,6 +162,14 @@ exports.deletePost = async (req, res, next) => {
             throw buildError("post not found", 404)
         }
         await Post.findByIdAndDelete(id)
+        let thePath = path.join(__dirname, "..", "public", post.cover)
+        if (fs.existsSync(thePath)) {
+            fs.unlink(thePath, (err) => {
+                if (err) {
+                    console.log(err);
+                }
+            })
+        }
 
         req.flash("success", "delete successfully");
         return res.redirect(`/post/my`);
