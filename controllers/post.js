@@ -4,6 +4,7 @@ let time = require("./../utils/time")
 exports.getOnePost = async (req, res, next) => {
     try {
         let { slug } = req.params
+        let user = req.user
         let post = await Post.findOne({ slug })
             .populate("user", "username profile")
             .lean()
@@ -12,7 +13,8 @@ exports.getOnePost = async (req, res, next) => {
         }
         post.updatedAt = time(post.updatedAt)
         return res.render("post", {
-            post
+            post,
+            canUpdate: post.user._id.toString() == user._id.toString()
         })
     } catch (error) {
         next(error)

@@ -34,6 +34,11 @@ body {
   font-size: 24px;
 }
 
+.header-actions {
+  display: flex;
+  gap: 10px;
+}
+
 .btn {
   text-decoration: none;
   padding: 8px 16px;
@@ -46,6 +51,24 @@ body {
 
 .btn:hover {
   background: #5a67d8;
+}
+
+.edit-btn {
+  background: #764ba2;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 16px;
+  border-radius: 8px;
+  color: #fff;
+  text-decoration: none;
+  transition: 0.3s;
+}
+
+.edit-btn:hover {
+  background: #6b46c1;
 }
 
 .author-box {
@@ -105,6 +128,10 @@ body {
   .post-header {
     flex-direction: column;
     gap: 10px;
+  }
+
+  .header-actions {
+    justify-content: flex-start;
   }
 
   .author-box {

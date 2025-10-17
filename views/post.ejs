@@ -12,15 +12,25 @@
 <body>
   <div class="post-wrapper">
     <header class="post-header">
-      <h1><%=post.title%></h1>
-      <a href="/" class="btn back-btn">بازگشت به بلاگ</a>
+      <h1>
+        <%=post.title%>
+      </h1>
+      <div class="header-actions">
+        <a href="/" class="btn back-btn">بازگشت به بلاگ</a>
+        <%if(canUpdate){%>
+          <a href="/post/update/<%=post._id%>/" class="btn edit-btn">&#9998;</a>
+          <%}%>
+      </div>
     </header>
 
     <div class="author-box">
       <img src="<%=post.user.profile%>" alt="author profile" class="author-avatar">
       <div class="author-info">
-        <h3 class="author-name">نویسنده: <%=post.user.username%></h3>
-        <span class="author-date"><%=post.updatedAt%></span>
+        <h3 class="author-name">نویسنده: <%=post.user.username%>
+        </h3>
+        <span class="author-date">
+          <%=post.updatedAt%>
+        </span>
       </div>
     </div>
 
