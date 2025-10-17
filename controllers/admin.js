@@ -2,6 +2,10 @@ let User = require("./../models/user")
 let Post = require("./../models/post")
 const time = require("../utils/time")
 let pagination = require("./../utils/pagination")
+const { isValidObjectId } = require("mongoose")
+const buildError = require("../utils/buildError")
+const fs = require("fs")
+const path = require("path")
 exports.getDashbord = async (req, res, next) => {
     try {
         let usersCount = await User.countDocuments()
@@ -32,7 +36,7 @@ exports.getDashbord = async (req, res, next) => {
 exports.getAdminPosts = async (req, res, next) => {
     try {
         let { page = 1, limit = 7 } = req.query
-        let posts = await Post.find()   
+        let posts = await Post.find()
             .populate("user", "username profile")
             .sort({ createdAt: "desc" })
             .lean()
@@ -49,6 +53,33 @@ exports.getAdminPosts = async (req, res, next) => {
             posts,
             pagination: pagination(page, limit, postsCount, "post")
         })
+    } catch (error) {
+        next(error)
+    }
+}
+exports.deletePost = async (req, res, next) => {
+    try {
+        let { id } = req.params
+
+        let isIdValid = await isValidObjectId(id)
+        if (!isIdValid) {
+            throw buildError("post not found", 404)
+        }
+
+        let post = await Post.findByIdAndDelete(id)
+        if (!post) {
+            throw buildError("post not found", 404)
+        }
+        let thePath = path.join(__dirname, "..", "public", post.cover)
+        if (fs.existsSync(thePath)) {
+            fs.unlink(thePath, (err) => {
+                if (err) {
+                    console.log(err);
+                }
+            })
+        }        
+        req.flash("success", "delete successfully");
+        return res.redirect(`/admin/posts`);
     } catch (error) {
         next(error)
     }
