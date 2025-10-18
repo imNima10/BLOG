@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>کاربران بن‌شده | پنل ادمین</title>
+    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/admin.css">
+</head>
+
+<body>
+    <div class="admin-wrapper">
+
+        <!-- نوار کناری -->
+        <aside class="sidebar">
+            <h2>مدیریت بلاگ</h2>
+            <nav>
+                <a href="/admin">🏠 داشبورد</a>
+                <a href="/admin/posts">📝 پست‌ها</a>
+                <a href="/admin/users">👥 کاربران</a>
+                <a href="/admin/banned-users" class="active">🚫 کاربران بن‌شده</a>
+                <a href="/">🔙 بازگشت به سایت</a>
+            </nav>
+        </aside>
+
+        <main class="content">
+            <header class="admin-header">
+                <h1>🚫 کاربران بن‌شده</h1>
+                <form action="/user/logout" method="post">
+                    <button class="logout-btn">خروج</button>
+                </form>
+            </header>
+
+            <section class="latest-banned-users">
+                <h2>لیست کاربران بن‌شده</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>پروفایل</th>
+                            <th>نام کاربری</th>
+                            <th>بن‌کننده</th>
+                            <th>تاریخ بن شدن</th>
+                            <th>عملیات</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><img src="profile1.png" alt="profile" class="avatar"></td>
+                            <td>mohammad</td>
+                            <td>admin</td>
+                            <td>۱۴۰۳/۰۷/۲۲</td>
+                            <td>
+                                <form action="/admin/unban/1" method="post" style="display:inline;">
+                                    <button type="submit" class="btn small">رفع بن</button>
+                                </form>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+        </main>
+    </div>
+</body>
+
+</html>

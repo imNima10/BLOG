@@ -17,6 +17,7 @@
         <a href="/admin" class="active">🏠 داشبورد</a>
         <a href="/admin/posts">📝 پست‌ها</a>
         <a href="/admin/users">👥 کاربران</a>
+        <a href="/admin/banned-users">🚫 کاربران بن‌شده</a>
         <a href="/">🔙 بازگشت به سایت</a>
       </nav>
     </aside>
@@ -40,6 +41,12 @@
           <h3>📰 تعداد پست‌ها</h3>
           <p>
             <%=postsCount%>
+          </p>
+        </div>
+        <div class="stat-card danger">
+          <h3>⛔ کاربران مسدود شده</h3>
+          <p>
+          <%=bansCount%>
           </p>
         </div>
       </section>
