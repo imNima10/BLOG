@@ -45,23 +45,52 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td><img src="profile1.png" alt="profile" class="avatar"></td>
-                            <td>mohammad</td>
-                            <td>admin</td>
-                            <td>۱۴۰۳/۰۷/۲۲</td>
-                            <td>
-                                <form action="/admin/unban/1" method="post" style="display:inline;">
-                                    <button type="submit" class="btn small">رفع بن</button>
-                                </form>
-                            </td>
-                        </tr>
+                        <%users.forEach(user=>{%>
+                            <tr>
+                                <td><img src="<%=user.user.profile%>" class="avatar"></td>
+                                <td>
+                                    <%=user.user.username%>
+                                </td>
+                                <td>
+                                    <%=user.bannedBy.username%>
+                                </td>
+                                <td>
+                                    <%=user.updatedAt%>
+                                </td>
+                                <td>
+                                    <form action="/admin/users/<%=user.user._id%>/ban" method="post"
+                                        onsubmit="return confirm('آیا از رفع بن کردن این کاربر مطمئن هستید؟')"
+                                        style="display:inline;">
+                                        <button type="submit" class="btn small">رفع بن</button>
+                                    </form>
+                                </td>
+                            </tr>
+                            <%})%>
                     </tbody>
                 </table>
             </section>
 
         </main>
     </div>
+    <script src="/js/sweetalert.js"></script>
+    <script>
+        if ("<%=locals.messages.success%>") {
+            swal({
+                title: "Success",
+                text: "<%=locals.messages.success%>",
+                icon: "success",
+                button: "ok",
+            })
+        } else if ("<%=locals.messages.error%>") {
+            swal({
+                title: "Error",
+                text: "<%=locals.messages.error%>",
+                icon: "error",
+                button: "try again",
+            })
+        } 
+    </script>
+
 </body>
 
 </html>

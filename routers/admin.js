@@ -7,7 +7,8 @@ let {
     getAdminUsers,
     deletePost,
     changeRole,
-    ban
+    ban,
+    getBannedUsers
 } = require("./../controllers/admin");
 
 router.get("/", authGuard, roleGuard, getDashbord);
@@ -16,5 +17,6 @@ router.post("/post/:id/delete", authGuard, roleGuard, deletePost);
 router.get("/users", authGuard, roleGuard, getAdminUsers);
 router.post("/users/:id/change-role", authGuard, roleGuard, changeRole);
 router.post("/users/:id/ban", authGuard, roleGuard, ban);
+router.get("/banned-users", authGuard, roleGuard, getBannedUsers);
 
 module.exports = router;

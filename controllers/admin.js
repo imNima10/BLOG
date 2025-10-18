@@ -9,6 +9,7 @@ const fs = require("fs")
 const path = require("path")
 exports.getDashbord = async (req, res, next) => {
     try {
+        let bansCount = await Ban.countDocuments()
         let usersCount = await User.aggregate([
             {
                 $lookup: {
@@ -28,7 +29,7 @@ exports.getDashbord = async (req, res, next) => {
             }
         ]);
         usersCount = usersCount[0]?.count || 0;
-        
+
         let postsCount = await Post.aggregate([
             {
                 $lookup: {
@@ -122,6 +123,7 @@ exports.getDashbord = async (req, res, next) => {
         return res.render("admin/dashbord", {
             usersCount,
             postsCount,
+            bansCount,
             lastUsers: lastUsers || [],
             lastPosts: lastPosts || []
         })
@@ -290,7 +292,7 @@ exports.ban = async (req, res, next) => {
             req.flash("error", "you cant ban yourself");
             return res.redirect("/admin/users");
         }
-        if(user.role=="ADMIN"){
+        if (user.role == "ADMIN") {
             req.flash("error", "you cant ban ban user");
             return res.redirect("/admin/users");
         }
@@ -298,14 +300,41 @@ exports.ban = async (req, res, next) => {
         if (isUserBaned) {
             await Ban.deleteOne({ user: user._id })
             req.flash("success", `${user.username} UnBan successfully`);
+            return res.redirect(`/admin/banned-users`);
         } else {
             await Ban.create({
                 user: user._id,
                 bannedBy: req.user._id
             })
             req.flash("success", `${user.username} Ban successfully`);
+            return res.redirect(`/admin/users`);
         }
-        return res.redirect(`/admin/users`);
+    } catch (error) {
+        next(error)
+    }
+}
+exports.getBannedUsers = async (req, res, next) => {
+    try {
+        let { page = 1, limit = 7 } = req.query
+        let users = await Ban.find()
+            .populate("user", "username profile")
+            .populate("bannedBy", "username profile")
+            .sort({ createdAt: "desc" })
+            .lean()
+            .limit(limit)
+            .skip((page - 1) * limit)
+        users = users.map(user => {
+            return {
+                ...user,
+                updatedAt: time(user.updatedAt)
+            };
+        });
+        
+        let usersCount = await User.countDocuments()
+        return res.render("admin/ban", {
+            users,
+            pagination: pagination(page, limit, usersCount, "banUser")
+        })
     } catch (error) {
         next(error)
     }
