@@ -13,6 +13,7 @@ exports.getDashbord = async (req, res, next) => {
 
         let lastUsers = await User.find()
             .limit(3)
+            .sort({ createdAt: "desc" })
         let posts = await Post.find()
             .limit(3)
             .sort({ createdAt: "desc" })
@@ -61,7 +62,7 @@ exports.deletePost = async (req, res, next) => {
     try {
         let { id } = req.params
 
-        let isIdValid = await isValidObjectId(id)
+        let isIdValid = isValidObjectId(id)
         if (!isIdValid) {
             throw buildError("post not found", 404)
         }
@@ -77,7 +78,7 @@ exports.deletePost = async (req, res, next) => {
                     console.log(err);
                 }
             })
-        }        
+        }
         req.flash("success", "delete successfully");
         return res.redirect(`/admin/posts`);
     } catch (error) {
@@ -97,6 +98,33 @@ exports.getAdminUsers = async (req, res, next) => {
             users,
             pagination: pagination(page, limit, usersCount, "user")
         })
+    } catch (error) {
+        next(error)
+    }
+}
+exports.changeRole = async (req, res, next) => {
+    try {
+        let { id } = req.params
+
+        let isIdValid = isValidObjectId(id)
+        if (!isIdValid) {
+            throw buildError("user not found", 404)
+        }
+
+        let user = await User.findById(id)
+        if (!user) {
+            throw buildError("user not found", 404)
+        }
+
+        if (user._id.toString() === req.user._id.toString()) {
+            req.flash("error", "you cant change your role");
+            return res.redirect("/admin/users");
+        }
+        await User.findByIdAndUpdate(id, {
+            role: user.role == "ADMIN" ? "USER" : "ADMIN"
+        })
+        req.flash("success", "Role changed successfully");
+        return res.redirect(`/admin/users`);
     } catch (error) {
         next(error)
     }
