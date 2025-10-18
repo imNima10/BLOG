@@ -9,19 +9,113 @@ const fs = require("fs")
 const path = require("path")
 exports.getDashbord = async (req, res, next) => {
     try {
-        let usersCount = await User.countDocuments()
-        let postsCount = await Post.countDocuments()
+        let usersCount = await User.aggregate([
+            {
+                $lookup: {
+                    from: "bans",
+                    localField: "_id",
+                    foreignField: "user",
+                    as: "banInfo"
+                }
+            },
+            {
+                $match: {
+                    banInfo: { $eq: [] }
+                }
+            },
+            {
+                $count: "count"
+            }
+        ]);
+        usersCount = usersCount[0]?.count || 0;
+        
+        let postsCount = await Post.aggregate([
+            {
+                $lookup: {
+                    from: "users",
+                    localField: "user",
+                    foreignField: "_id",
+                    as: "user"
+                }
+            },
+            {
+                $unwind: "$user"
+            },
+            {
+                $lookup: {
+                    from: "bans",
+                    localField: "user._id",
+                    foreignField: "user",
+                    as: "banInfo"
+                }
+            },
+            {
+                $match: {
+                    banInfo: { $eq: [] }
+                }
+            },
+            {
+                $count: "count"
+            }
+        ]);
+        postsCount = postsCount[0]?.count || 0;
 
-        let lastUsers = await User.find()
-            .limit(3)
-            .sort({ createdAt: "desc" })
-        let posts = await Post.find()
-            .limit(3)
-            .sort({ createdAt: "desc" })
-            .populate("user", "username")
-        let lastPosts = posts.map(post => {
+        let lastUsers = await User.aggregate([
+            {
+                $lookup: {
+                    from: "bans",
+                    localField: "_id",
+                    foreignField: "user",
+                    as: "banInfo"
+                }
+            },
+            {
+                $match: {
+                    banInfo: { $eq: [] }
+                }
+            },
+            {
+                $sort: { createdAt: -1 }
+            },
+            {
+                $limit: 3
+            }
+        ]);
+        let lastPosts = await Post.aggregate([
+            {
+                $lookup: {
+                    from: "users",
+                    localField: "user",
+                    foreignField: "_id",
+                    as: "user"
+                }
+            },
+            {
+                $unwind: "$user"
+            },
+            {
+                $lookup: {
+                    from: "bans",
+                    localField: "user._id",
+                    foreignField: "user",
+                    as: "banInfo"
+                }
+            },
+            {
+                $match: {
+                    banInfo: { $eq: [] }
+                }
+            },
+            {
+                $sort: { createdAt: -1 }
+            },
+            {
+                $limit: 3
+            },
+        ]);
+        lastPosts = lastPosts.map(post => {
             return {
-                ...post.toObject(),
+                ...post,
                 updatedAt: time(post.updatedAt)
             };
         });
@@ -38,12 +132,42 @@ exports.getDashbord = async (req, res, next) => {
 exports.getAdminPosts = async (req, res, next) => {
     try {
         let { page = 1, limit = 7 } = req.query
-        let posts = await Post.find()
-            .populate("user", "username profile")
-            .sort({ createdAt: "desc" })
-            .lean()
-            .limit(limit)
-            .skip((page - 1) * limit)
+        let posts = await Post.aggregate([
+            {
+                $lookup: {
+                    from: "users",
+                    localField: "user",
+                    foreignField: "_id",
+                    as: "user"
+                }
+            },
+            {
+                $unwind: "$user"
+            },
+            {
+                $lookup: {
+                    from: "bans",
+                    localField: "user._id",
+                    foreignField: "user",
+                    as: "banInfo"
+                }
+            },
+            {
+                $match: {
+                    banInfo: { $eq: [] }
+                }
+            },
+            {
+                $sort: { createdAt: -1 }
+            },
+            {
+                $skip: (page - 1) * limit
+            },
+            {
+                $limit: limit
+            },
+        ]);
+
         posts = posts.map(post => {
             return {
                 ...post,
@@ -89,11 +213,30 @@ exports.deletePost = async (req, res, next) => {
 exports.getAdminUsers = async (req, res, next) => {
     try {
         let { page = 1, limit = 7 } = req.query
-        let users = await User.find()
-            .sort({ createdAt: "desc" })
-            .lean()
-            .limit(limit)
-            .skip((page - 1) * limit)
+        let users = await User.aggregate([
+            {
+                $lookup: {
+                    from: "bans",
+                    localField: "_id",
+                    foreignField: "user",
+                    as: "banInfo"
+                }
+            },
+            {
+                $match: {
+                    banInfo: { $eq: [] }
+                }
+            },
+            {
+                $sort: { createdAt: -1 }
+            },
+            {
+                $skip: (page - 1) * limit
+            },
+            {
+                $limit: limit
+            }
+        ]);
         let usersCount = await User.countDocuments()
         return res.render("admin/users", {
             users,
