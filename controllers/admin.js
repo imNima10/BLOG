@@ -1,5 +1,6 @@
 let User = require("./../models/user")
 let Post = require("./../models/post")
+let Ban = require("./../models/ban")
 const time = require("../utils/time")
 let pagination = require("./../utils/pagination")
 const { isValidObjectId } = require("mongoose")
@@ -124,6 +125,39 @@ exports.changeRole = async (req, res, next) => {
             role: user.role == "ADMIN" ? "USER" : "ADMIN"
         })
         req.flash("success", "Role changed successfully");
+        return res.redirect(`/admin/users`);
+    } catch (error) {
+        next(error)
+    }
+}
+exports.ban = async (req, res, next) => {
+    try {
+        let { id } = req.params
+
+        let isIdValid = isValidObjectId(id)
+        if (!isIdValid) {
+            throw buildError("user not found", 404)
+        }
+
+        let user = await User.findById(id)
+        if (!user) {
+            throw buildError("user not found", 404)
+        }
+        if (user._id.toString() === req.user._id.toString()) {
+            req.flash("error", "you cant ban yourself");
+            return res.redirect("/admin/users");
+        }
+        let isUserBaned = await Ban.findOne({ user: user._id })
+        if (isUserBaned) {
+            await Ban.deleteOne({ user: user._id })
+            req.flash("success", `${user.username} UnBan successfully`);
+        } else {
+            await Ban.create({
+                user: user._id,
+                bannedBy: req.user._id
+            })
+            req.flash("success", `${user.username} Ban successfully`);
+        }
         return res.redirect(`/admin/users`);
     } catch (error) {
         next(error)

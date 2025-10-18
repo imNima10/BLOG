@@ -55,7 +55,10 @@
                   <%=user.role%>
                 </td>
                 <td>
-                  <a href="#" class="btn small danger">مسدود</a>
+                  <form action="/admin/users/<%= user._id %>/ban" method="post"
+                    onsubmit="return confirm('آیا از مسدود کردن این کاربر مطمئن هستید؟')" style="display:inline;">
+                    <button type="submit" class="btn small danger">مسدود</button>
+                  </form>
                   <form action="/admin/users/<%= user._id %>/change-role" method="post"
                     onsubmit="return confirm('آیا از تغییر پست این کاربر مطمئن هستید؟')" style="display:inline;">
                     <button type="submit" class="btn small">تغییر نقش</button>
