@@ -290,6 +290,10 @@ exports.ban = async (req, res, next) => {
             req.flash("error", "you cant ban yourself");
             return res.redirect("/admin/users");
         }
+        if(user.role=="ADMIN"){
+            req.flash("error", "you cant ban ban user");
+            return res.redirect("/admin/users");
+        }
         let isUserBaned = await Ban.findOne({ user: user._id })
         if (isUserBaned) {
             await Ban.deleteOne({ user: user._id })
