@@ -54,7 +54,7 @@
                   <%=post.updatedAt%>
                 </td>
                 <td>
-                  <a href="#" class="btn small view">مشاهده</a>
+                  <a href="/admin/post/<%=post.slug%>" class="btn small view">مشاهده</a>
                   <form action="/admin/post/<%= post._id %>/delete" method="post"
                     onsubmit="return confirm('آیا از حذف این پست مطمئن هستید؟')" style="display:inline;">
                     <button type="submit" class="btn small delete">حذف</button>

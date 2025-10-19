@@ -20,7 +20,8 @@ exports.getOnePost = async (req, res, next) => {
         post.updatedAt = time(post.updatedAt)
         return res.render("post", {
             post,
-            canUpdate: post.user._id.toString() == user._id.toString()
+            canUpdate: post.user._id.toString() == user._id.toString(),
+            isAdmin: false
         })
     } catch (error) {
         next(error)

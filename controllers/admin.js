@@ -185,6 +185,26 @@ exports.getAdminPosts = async (req, res, next) => {
         next(error)
     }
 }
+exports.getPost = async (req, res, next) => {
+    try {
+        let { slug } = req.params
+
+        let post = await Post.findOne({ slug })
+            .populate("user", "username profile")
+            .lean()
+        if (!post) {
+            throw buildError("post not found", 404)
+        }
+        post.updatedAt = time(post.updatedAt)
+        return res.render("post", {
+            post,
+            canUpdate: true,
+            isAdmin:true
+        })
+    } catch (error) {
+        next(error)
+    }
+}
 exports.deletePost = async (req, res, next) => {
     try {
         let { id } = req.params
