@@ -20,7 +20,8 @@ exports.getOnePost = async (req, res, next) => {
         post.updatedAt = time(post.updatedAt)
         return res.render("post", {
             post,
-            canUpdate: post.user._id.toString() == user._id.toString()
+            canUpdate: post.user._id.toString() == user._id.toString(),
+            isAdmin: false
         })
     } catch (error) {
         next(error)
@@ -79,7 +80,8 @@ exports.myPostsPage = async (req, res, next) => {
         let postsCount = await Post.countDocuments({ user: user._id })
         return res.render("myPosts", {
             posts: posts || [],
-            pagination: pagination(page, limit, postsCount, "post")
+            pagination: pagination(page, limit, postsCount, "post"),
+            isAdmin: !!req.isAdmin
         })
     } catch (error) {
         next(error)

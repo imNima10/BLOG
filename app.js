@@ -19,6 +19,7 @@ let authRouter = require("./routers/auth")
 let userRouter = require("./routers/user")
 let indexRouter = require("./routers/index")
 let postRouter = require("./routers/post")
+let adminRouter = require("./routers/admin")
 
 //? middlewares
 app.use(express.json())
@@ -50,6 +51,7 @@ app.use("/auth", authRouter)
 app.use("/user", userRouter)
 app.use("/", indexRouter)
 app.use("/post", postRouter)
+app.use("/admin", adminRouter)
 
 app.use((req, res) => {
     return res.status(404).render("404")

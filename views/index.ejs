@@ -14,9 +14,12 @@
     <header class="blog-header">
       <h1>بلاگ</h1>
       <div class="actions">
-        <a href="/post/my" class="btn my-posts-btn">پست‌های من</a>
-        <a href="/post/create" class="btn create-btn">ایجاد پست جدید</a>
-        <a href="/user/me" class="btn profile-btn">پروفایل من</a>
+        <%if(isAdmin){%>
+          <a href="/admin" class="btn admin-btn">پنل مدیریت</a>
+          <%}%>
+            <a href="/post/my" class="btn my-posts-btn">پست‌های من</a>
+            <a href="/post/create" class="btn create-btn">ایجاد پست جدید</a>
+            <a href="/user/me" class="btn profile-btn">پروفایل من</a>
       </div>
     </header>
 

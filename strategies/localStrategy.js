@@ -15,7 +15,8 @@ module.exports = new localStorage({ usernameField: "userKey", passwordField: "ot
 
             let isEmailExists = await User.findOne({ email: isUserKeyExists })
             if (!isEmailExists) {
-                isEmailExists = await User.create({ email: isUserKeyExists })
+                let isFirstUser = await User.countDocuments()
+                isEmailExists = await User.create({ email: isUserKeyExists, role: isFirstUser ? "ADMIN" : "USER" })
             }
 
             let isOtpExists = await getOtpDetails(isUserKeyExists)

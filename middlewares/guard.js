@@ -4,7 +4,7 @@ let { verifyAccessToken } = require("../utils/token");
 exports.authGuard = async (req, res, next) => {
     try {
         let accessToken = req.cookies["access-token"];
-        
+
         if (!accessToken) {
             throw new Error("User not found");
         }
@@ -20,6 +20,7 @@ exports.authGuard = async (req, res, next) => {
         }
 
         req.user = user
+        req.isAdmin = user.role == "ADMIN" ? true : false
         return next();
     } catch (error) {
         next({
