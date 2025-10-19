@@ -69,7 +69,28 @@
                     </tbody>
                 </table>
             </section>
+            <div class="pagination">
+                <% if (pagination.page> 1) { %>
+                    <a href="?page=<%= +pagination.page - 1 %>" class="page-btn prev">قبلی</a>
+                    <% } else { %>
+                        <span class="page-btn prev disabled">قبلی</span>
+                        <% } %>
 
+                            <div class="page-numbers">
+                                <% for (let i=1; i <=pagination.totalPage; i++) { %>
+                                    <a href="?page=<%= i %>"
+                                        class="page-number <%= i === pagination.page ? 'active' : '' %>">
+                                        <%= i %>
+                                    </a>
+                                    <% } %>
+                            </div>
+
+                            <% if (pagination.page < pagination.totalPage) { %>
+                                <a href="?page=<%= +pagination.page + 1 %>" class="page-btn next">بعدی</a>
+                                <% } else { %>
+                                    <span class="page-btn next disabled">بعدی</span>
+                                    <% } %>
+            </div>
         </main>
     </div>
     <script src="/js/sweetalert.js"></script>

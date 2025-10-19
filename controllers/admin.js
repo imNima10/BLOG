@@ -330,10 +330,10 @@ exports.getBannedUsers = async (req, res, next) => {
             };
         });
         
-        let usersCount = await User.countDocuments()
+        let banUsersCount = await Ban.countDocuments()
         return res.render("admin/ban", {
             users,
-            pagination: pagination(page, limit, usersCount, "banUser")
+            pagination: pagination(page, limit, banUsersCount, "banUser")
         })
     } catch (error) {
         next(error)
